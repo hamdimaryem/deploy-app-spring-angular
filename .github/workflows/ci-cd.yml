@@ -36,7 +36,7 @@ jobs:
         run: docker-compose up -d
       - name: Wait for services to be ready
         run: sleep 30
-      - name: Check all containers are running
+      - name: Check containers are running
         run: docker ps
       - name: Verify frontend is accessible
         run: curl -f http://localhost:4200 || echo "Frontend is up"
