@@ -24,19 +24,19 @@ jobs:
         with:
           context: ./springboot/app
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/spring-app:latest
+          tags: hamdimaryem/spring-app:latest
 
       - name: Build and push frontend image
         uses: docker/build-push-action@v5
         with:
           context: ./angular-app
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/angular-app:latest
+          tags: hamdimaryem/angular-app:latest
 
       - name: Tag images for docker-compose
         run: |
-          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/spring-app:latest spring-app
-          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/angular-app:latest angular-app
+          docker tag hamdimaryem/spring-app:latest spring-app
+          docker tag hamdimaryem/angular-app:latest angular-app
 
       - name: Start application with Docker Compose
         run: docker-compose up -d
@@ -55,4 +55,3 @@ jobs:
 
       - name: Tear down containers
         run: docker-compose down
-
