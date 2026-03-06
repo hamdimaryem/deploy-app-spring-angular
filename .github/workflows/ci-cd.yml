@@ -21,21 +21,21 @@ jobs:
         run: mvn package -DskipTests -f springboot/app/pom.xml
 
       - name: Build backend Docker image
-        run: docker build --no-cache -t hamdimaryem/spring-app:latest -f springboot/app/Dockerfile springboot/app
+        run: docker build --no-cache -t mariem576/spring-app:latest -f springboot/app/Dockerfile springboot/app
 
       - name: Build frontend Docker image
-        run: docker build --no-cache -t hamdimaryem/angular-app:latest -f angular-app/Dockerfile angular-app
+        run: docker build --no-cache -t mariem576/angular-app:latest -f angular-app/Dockerfile angular-app
 
       - name: Push backend image to Docker Hub
-        run: docker push hamdimaryem/spring-app:latest
+        run: docker push mariem576/spring-app:latest
 
       - name: Push frontend image to Docker Hub
-        run: docker push hamdimaryem/angular-app:latest
+        run: docker push mariem576/angular-app:latest
 
       - name: Tag images for docker-compose
         run: |
-          docker tag hamdimaryem/spring-app:latest spring-app
-          docker tag hamdimaryem/angular-app:latest angular-app
+          docker tag mariem576/spring-app:latest spring-app
+          docker tag mariem576/angular-app:latest angular-app
 
       - name: Start application with Docker Compose
         run: docker-compose up -d
