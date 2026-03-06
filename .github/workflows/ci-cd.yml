@@ -7,11 +7,9 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
+
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -22,24 +20,20 @@ jobs:
       - name: Build JAR with Maven
         run: mvn package -DskipTests -f springboot/app/pom.xml
 
-      - name: Build and push backend image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./springboot/app
-          push: true
-          tags: hamdimaryem/spring-app:latest
+      - name: Build backend Docker image
+        run: docker build --no-cache -t hamdimaryem/spring-app:latest -f springboot/app/Dockerfile springboot/app
 
-      - name: Build and push frontend image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./angular-app
-          push: true
-          tags: hamdimaryem/angular-app:latest
+      - name: Build frontend Docker image
+        run: docker build --no-cache -t hamdimaryem/angular-app:latest -f angular-app/Dockerfile angular-app
+
+      - name: Push backend image to Docker Hub
+        run: docker push hamdimaryem/spring-app:latest
+
+      - name: Push frontend image to Docker Hub
+        run: docker push hamdimaryem/angular-app:latest
 
       - name: Tag images for docker-compose
         run: |
-          docker pull hamdimaryem/spring-app:latest
-          docker pull hamdimaryem/angular-app:latest
           docker tag hamdimaryem/spring-app:latest spring-app
           docker tag hamdimaryem/angular-app:latest angular-app
 
