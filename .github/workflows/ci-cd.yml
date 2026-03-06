@@ -61,3 +61,8 @@ jobs:
 
       - name: Tear down containers
         run: docker-compose down
+
+
+### 6️⃣ Clique **Commit changes** en bas
+```
+Commit message : fix: correct backend path to springboot/app
